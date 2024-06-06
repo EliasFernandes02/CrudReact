@@ -1,8 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { useParams } from 'react-router-dom';
+import axios from "axios"
 const EditProduct = () => {
+const {id} = useParams()
+const [title,setTitle] = useState("")
+const [price,setPrice] = useState("")
+const [promotion,setPromotion] = useState("")
+useEffect(() => {
+  axios.get(`https://6657b1b55c3617052645998a.mockapi.io/products/products/${id}`)
+  .then(response => setTitle(response.data.title))
+  .catch(error=>console.log(error))
+},[]);
 
+function handleSubmit(event) {
+  event.preventDefault();
+  axios.put(`https://6657b1b55c3617052645998a.mockapi.io/products/products/${id}`)
+}
 
   return (
     <div className="container mt-5">

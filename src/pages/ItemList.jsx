@@ -1,9 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from "axios"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ItemList = () => {
+  const [products,setProducts] = useState([])
 
+  useEffect(() => {
+    axios.get('https://6657b1b55c3617052645998a.mockapi.io/products/products')
+    .then(response => setProducts(response.data))
+    .catch(error=>console.log(error))
+  },[]);
+
+  function deleteProduct(id) {
+    useEffect(() => {
+      axios.delete(`https://6657b1b55c3617052645998a.mockapi.io/products/products/${id}`)
+      .then(() => setProducts(products.filter(product=> product.id !==id)))
+    },[]);
+  }
 
   return (
     <div className="container mt-5">

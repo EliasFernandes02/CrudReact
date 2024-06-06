@@ -1,9 +1,23 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { useNavigate } from 'react-router-dom';
+import axios from "axios"
 const AddProduct = () => {
 
+  const [title,setTitle] = useState("")
+  const [price,setPrice] = useState("")
+  const [promotion,setPromotion] = useState("")
+  const navigate = useNavigate()
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    const newProduct = {title,price,promotion}
+    axios.post('https://6657b1b55c3617052645998a.mockapi.io/products/products',newProduct)
+    .then(() => {
+      navigate('/')
+    })
+    .catch(error=> console.log(error))
+  }
   return (
     <div className="container mt-5">
       <h2 className="mb-4">Add New Product</h2>
